@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom pattern styling */
+.pattern-light {
+    position: absolute;
+    inset: 0;
+    z-index: -10;
+    overflow: hidden;
+}
+
+/* Dark mode transition */
+.dark .pattern-light {
+    display: none;
+}
+
+/* Smooth transitions */
+.transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+/* Backdrop blur */
+.backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}

@@ -1,212 +1,146 @@
-@extends("layouts.guest")
+@extends("layouts.app")
 
-
-@section('content')
-
-
-<div class="min-h-screen bg-gray-100">
-    <!-- Hero Section -->
-    <div class="relative bg-indigo-800 overflow-hidden">
-        <div class="max-w-7xl mx-auto">
-            <div class="relative z-10 pb-8 bg-indigo-800 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-                <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-                    <div class="sm:text-center lg:text-left">
-                        <h1 class="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl">
-                            <span class="block">Transform Your Life</span>
-                            <span class="block text-indigo-200">With Our Coaching</span>
-                        </h1>
-                        <p
-                            class="mt-3 text-base text-indigo-100 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                            Professional coaching to help you achieve your personal and professional goals.
-                        </p>
-                        <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                            <div class="rounded-md shadow">
-                                <a href="#"
-                                    class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-white hover:bg-indigo-50 md:py-4 md:text-lg md:px-10">
-                                    Get Started
-                                </a>
-                            </div>
-                            <div class="mt-3 sm:mt-0 sm:ml-3">
-                                <a href="#"
-                                    class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 bg-opacity-60 hover:bg-opacity-70 md:py-4 md:text-lg md:px-10">
-                                    Learn More
-                                </a>
-                            </div>
-                        </div>
+@section("content")
+    <div class="min-h-screen bg-white dark:bg-gray-900">
+        <!-- Hero Section -->
+        <section class="relative bg-gradient-to-br from-indigo-900 to-indigo-700">
+            <div class="max-w-7xl mx-auto px-4 py-24 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl">
+                        Transform your life through coaching
+                    </h1>
+                    <p class="mt-6 max-w-lg mx-auto text-xl text-indigo-100">
+                        Personalized guidance to help you achieve your personal and professional goals
+                    </p>
+                    <div class="mt-10 flex justify-center space-x-4">
+                        <a href="{{ route('register') }}"
+                            class="inline-block px-6 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
+                            Get Started
+                        </a>
+                        <a href="#how-it-works"
+                            class="inline-block px-6 py-3 border border-white text-white font-medium rounded-md hover:bg-white hover:bg-opacity-10 transition-colors">
+                            Learn More
+                        </a>
                     </div>
-                </main>
+                </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- Features Section -->
-    <div class="py-12 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="lg:text-center">
-                <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Features</h2>
-                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                    A better way to grow
-                </p>
-                <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-                    Our coaching programs are designed to help you unlock your full potential.
-                </p>
-            </div>
+        <!-- Features Section -->
+        <section id="how-it-works" class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white">How our coaching works</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-500 dark:text-gray-300">
+                        A proven methodology designed for real, measurable results
+                    </p>
+                </div>
 
-            <div class="mt-10">
-                <div class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
-                    <!-- Feature 1 -->
-                    <div class="relative">
-                        <div
-                            class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-                            <!-- Heroicon name: outline/globe-alt -->
-                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" aria-hidden="true">
+                <div class="mt-16 grid grid-cols-1 gap-12 sm:grid-cols-3">
+                    <div class="text-center">
+                        <div class="mx-auto h-12 w-12 text-indigo-600">
+                            <svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                             </svg>
                         </div>
-                        <p class="ml-16 text-lg leading-6 font-medium text-gray-900">Global Community</p>
-                        <p class="ml-16 mt-2 text-base text-gray-500">
-                            Connect with like-minded individuals from around the world.
+                        <h3 class="mt-6 text-lg font-medium text-gray-900 dark:text-white">Assessment</h3>
+                        <p class="mt-2 text-base text-gray-500 dark:text-gray-300">
+                            We begin with a comprehensive evaluation of your goals and challenges
                         </p>
                     </div>
 
-                    <!-- Feature 2 -->
-                    <div class="relative">
-                        <div
-                            class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-                            <!-- Heroicon name: outline/scale -->
-                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" aria-hidden="true">
+                    <div class="text-center">
+                        <div class="mx-auto h-12 w-12 text-indigo-600">
+                            <svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+                                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                             </svg>
                         </div>
-                        <p class="ml-16 text-lg leading-6 font-medium text-gray-900">Balanced Approach</p>
-                        <p class="ml-16 mt-2 text-base text-gray-500">
-                            We focus on both personal and professional development.
+                        <h3 class="mt-6 text-lg font-medium text-gray-900 dark:text-white">Strategy</h3>
+                        <p class="mt-2 text-base text-gray-500 dark:text-gray-300">
+                            Develop a customized plan tailored to your unique situation
                         </p>
                     </div>
 
-                    <!-- Feature 3 -->
-                    <div class="relative">
-                        <div
-                            class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-                            <!-- Heroicon name: outline/lightning-bolt -->
-                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" aria-hidden="true">
+                    <div class="text-center">
+                        <div class="mx-auto h-12 w-12 text-indigo-600">
+                            <svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M13 10V3L4 14h7v7l9-11h-7z" />
                             </svg>
                         </div>
-                        <p class="ml-16 text-lg leading-6 font-medium text-gray-900">Fast Results</p>
-                        <p class="ml-16 mt-2 text-base text-gray-500">
-                            Our proven methods deliver measurable results quickly.
-                        </p>
-                    </div>
-
-                    <!-- Feature 4 -->
-                    <div class="relative">
-                        <div
-                            class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-                            <!-- Heroicon name: outline/annotation -->
-                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                            </svg>
-                        </div>
-                        <p class="ml-16 text-lg leading-6 font-medium text-gray-900">Expert Guidance</p>
-                        <p class="ml-16 mt-2 text-base text-gray-500">
-                            Learn from certified coaches with years of experience.
+                        <h3 class="mt-6 text-lg font-medium text-gray-900 dark:text-white">Implementation</h3>
+                        <p class="mt-2 text-base text-gray-500 dark:text-gray-300">
+                            Execute with expert guidance and accountability for results
                         </p>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- Testimonials -->
-    <div class="bg-indigo-100 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="lg:text-center">
-                <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Testimonials</h2>
-                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                    What our clients say
+        <!-- Testimonials -->
+        <section class="bg-gray-50 dark:bg-gray-800 py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white">Client success stories</h2>
+                </div>
+
+                <div class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3">
+                    <div class="p-6">
+                        <blockquote class="text-gray-600 dark:text-gray-300">
+                            <p class="text-lg italic">
+                                "The coaching completely transformed my approach to business. I doubled my revenue in six
+                                months."
+                            </p>
+                            <footer class="mt-4">
+                                <p class="font-medium text-gray-900 dark:text-white">Sarah Johnson</p>
+                                <p class="text-indigo-600 dark:text-indigo-400">Business Owner</p>
+                            </footer>
+                        </blockquote>
+                    </div>
+
+                    <div class="p-6">
+                        <blockquote class="text-gray-600 dark:text-gray-300">
+                            <p class="text-lg italic">
+                                "The personalized attention and actionable advice made all the difference in my career."
+                            </p>
+                            <footer class="mt-4">
+                                <p class="font-medium text-gray-900 dark:text-white">Michael Chen</p>
+                                <p class="text-indigo-600 dark:text-indigo-400">Executive</p>
+                            </footer>
+                        </blockquote>
+                    </div>
+
+                    <div class="p-6">
+                        <blockquote class="text-gray-600 dark:text-gray-300">
+                            <p class="text-lg italic">
+                                "The accountability helped me launch my dream business. Worth every penny!"
+                            </p>
+                            <footer class="mt-4">
+                                <p class="font-medium text-gray-900 dark:text-white">Emma Rodriguez</p>
+                                <p class="text-indigo-600 dark:text-indigo-400">Entrepreneur</p>
+                            </footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="bg-indigo-700">
+            <div class="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-extrabold text-white">Ready to begin your transformation?</h2>
+                <p class="mt-4 text-lg text-indigo-100">
+                    Take the first step toward achieving your goals today
                 </p>
-            </div>
-
-            <div class="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-                <!-- Testimonial 1 -->
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <div class="flex items-center">
-                        <div class="ml-4">
-                            <div class="text-lg font-medium text-gray-900">Sarah Johnson</div>
-                            <div class="text-indigo-600">Business Owner</div>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <p class="text-gray-600">
-                            "The coaching program completely transformed my approach to business. I've doubled
-                            my
-                            revenue in just six months!"
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Testimonial 2 -->
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <div class="flex items-center">
-                        <div class="ml-4">
-                            <div class="text-lg font-medium text-gray-900">Michael Chen</div>
-                            <div class="text-indigo-600">Executive</div>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <p class="text-gray-600">
-                            "I was skeptical at first, but the personalized attention and actionable advice made
-                            all
-                            the
-                            difference in my career."
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Testimonial 3 -->
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <div class="flex items-center">
-                        <div class="ml-4">
-                            <div class="text-lg font-medium text-gray-900">Emma Rodriguez</div>
-                            <div class="text-indigo-600">Entrepreneur</div>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <p class="text-gray-600">
-                            "The accountability and support from my coach helped me launch my dream business.
-                            Worth
-                            every penny!"
-                        </p>
-                    </div>
+                <div class="mt-8">
+                    <a href="{{ route('register') }}"
+                        class="inline-block px-6 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
+                        Start Now
+                    </a>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
-
-    <!-- CTA Section -->
-    <div class="bg-indigo-800">
-        <div class="max-w-2xl mx-auto text-center py-16 px-4 sm:py-20 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
-                <span class="block">Ready to transform your life?</span>
-                <span class="block">Start your coaching journey today.</span>
-            </h2>
-            <p class="mt-4 text-lg leading-6 text-indigo-200">
-                Take the first step toward achieving your goals with our personalized coaching programs.
-            </p>
-            <a href="#"
-                class="mt-8 w-full inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 sm:w-auto">
-                Sign up for free consultation
-            </a>
-        </div>
-    </div>
-</div>
-
+@endsection
