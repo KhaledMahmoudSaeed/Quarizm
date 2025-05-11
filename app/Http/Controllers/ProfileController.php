@@ -30,7 +30,13 @@ class ProfileController extends Controller
     {
         Gate::authorize('viewAny', User::class);
         $users = User::paginate(10);
-        return view('users.index', ['users' => $users]);
+        return view('dashboard.users.index', ['users' => $users]);
+    }
+    public function coaches(): View
+    {
+        Gate::authorize('coaches', User::class);
+        $users = User::where("role", "=", "Coach")->paginate(10);
+        return view('users.coaches', ['users' => $users]);
     }
 
     /**
@@ -66,39 +72,38 @@ class ProfileController extends Controller
     /**
      * Delete the user's account.
      */
-    public function destroy(Request $request, ImageService $imageService): RedirectResponse
+    public function destroy(Request $request, ImageService $imageService, int $id): RedirectResponse
     {
-        Gate::authorize("delete", $request->user());
+        $user = User::findOrFail($id);
 
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
+        Gate::authorize('delete', $user);
 
-        $user = $request->user();
+        // Validate current user's password (for security)
+        if ($user === $request->user()) {
+            $request->validateWithBag('userDeletion', [
+                'password' => ['required', 'current_password'],
+            ]);
 
+        }
         // Delete user image if not default
         if ($user->img && $user->img !== config('app.user_default_image_url')) {
             $imagePublicId = $imageService->extractPublicId($user->img);
             $imageService->deleteImage($imagePublicId);
         }
-        Auth::logout();
 
         $user->delete();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        // If the deleted user is the currently authenticated user, logout and invalidate session
+        if ($user->id === $request->user()->id) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
 
-        return Redirect::to('/')->with('success', 'YOUR ACCOUNT HAS BEEN SUCCESSFULLY DELETED.');
-    }
-    public function delete(User $user): RedirectResponse
-    {
-        Gate::authorize("delete", $user);
-        if (!$user->isAdmin()) {
-            $user->delete();
-            return to_route("users.index")->with("success", "ACCOUNT HAS BEEN SUCCESSFULLY DELETED");
-        } else {
-            abort(403, "YOU DON'T HAVE PERMISSION TO DO THIS ACTION");
+            return Redirect::to('/')->with('success', 'YOUR ACCOUNT HAS BEEN SUCCESSFULLY DELETED.');
         }
 
+        // Otherwise, redirect back or to users list with success message
+        return redirect()->route('users.index')->with('success', 'User has been successfully deleted.');
     }
+
 }

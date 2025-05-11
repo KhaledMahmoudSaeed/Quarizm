@@ -15,15 +15,32 @@ class PrivateSessionController extends Controller
     public function index(): View
     {
         Gate::authorize("viewAny", PrivateSession::class);
+
         $id = Auth::id();
+
         $isCoach = PrivateSession::where("coach_id", $id)->exists();
+
         if ($isCoach) {
-            $PrivateSessionsData = PrivateSession::with("coach")->where('coach_id', $id)->get(['date', 'coach_id']);
+            // Get all coachee IDs for this coach
+            $coacheeIds = PrivateSession::where("coach_id", $id)->pluck("coachee_id");
+
+            // Get sessions where coachee_id in $coacheeIds, eager load coachee
+            $privateSessionsData = PrivateSession::with("coachee")
+                ->whereIn('coachee_id', $coacheeIds)
+                ->get(['date', 'coachee_id']);
         } else {
-            $PrivateSessionsData = PrivateSession::with("coachee")->where('coachee_id', $id)->get(['date', 'coachee_id']);
+            // Get all coach IDs for this coachee
+            $coachIds = PrivateSession::where("coachee_id", $id)->pluck("coach_id");
+
+            // Get sessions where coach_id in $coachIds, eager load coach
+            $privateSessionsData = PrivateSession::with("coach")
+                ->whereIn('coach_id', $coachIds)
+                ->get(['date', 'coach_id']);
         }
-        return view("privatesession.index", ['privateSessionsData' => $PrivateSessionsData]);
+
+        return view("privatesession.index", ['privateSessionsData' => $privateSessionsData]);
     }
+
     public function show(PrivateSession $privatesession): View
     {
         Gate::authorize("view", $privatesession);

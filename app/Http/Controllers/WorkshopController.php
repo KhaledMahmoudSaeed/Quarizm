@@ -17,14 +17,20 @@ class WorkshopController extends Controller
     public function index(): View
     {
         Gate::authorize('viewAny', Workshop::class);
-        $workshops = Workshop::with(["user:id,name", "category:id,name"])->paginate(10);
+        $workshops = Workshop::with(["user", "category"])->paginate(10);
         return view("workshop.index", ['workshops' => $workshops]);
+    }
+    public function all(): View
+    {
+        Gate::authorize('viewAny', Workshop::class);
+        $workshops = Workshop::with(["user", "category"])->paginate(10);
+        return view("dashboard.workshops.index", ['workshops' => $workshops]);
     }
     public function show(Workshop $workshop): View
     {
         Gate::authorize('view', $workshop);
         $workshop->load(['user', 'category']);
-        return view("workshop.show", [
+        return view("dashboard.workshops.show", [
             'workshop' => $workshop,
             'coach' => $workshop->user,
             'category' => $workshop->category,
@@ -33,7 +39,7 @@ class WorkshopController extends Controller
     public function create(): View
     {
         Gate::authorize('create', Workshop::class);
-        return view("workshop.create");
+        return view("dashboard.workshops.create");
     }
 
     public function store(StoreWorkshopRequest $storeWorkshopRequest, ImageService $imageService): RedirectResponse
@@ -53,7 +59,7 @@ class WorkshopController extends Controller
     public function edit(Workshop $workshop): View
     {
         Gate::authorize('update', $workshop);
-        return view("workshop.edit", ['workshop' => $workshop]);
+        return view("dashboard.workshops.edit", ['workshop' => $workshop]);
     }
 
     public function update(UpdateWorkshopRequest $updateWorkshopRequest, Workshop $workshop, ImageService $imageService): RedirectResponse
@@ -69,7 +75,7 @@ class WorkshopController extends Controller
             $validateData['img'] = $imageUrl;
         }
         $workshop->update($validateData);
-        return to_route('workshop.index')->with("success", "WORKSHOP HAS BEEN SUCCESSFULLY UPDATED");
+        return to_route('Allworkshops')->with("success", "WORKSHOP HAS BEEN SUCCESSFULLY UPDATED");
     }
 
     public function destroy(Workshop $workshop, ImageService $imageService): RedirectResponse

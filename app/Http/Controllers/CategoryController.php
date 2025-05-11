@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Models\Reservation;
+use App\Models\Workshop;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
@@ -17,6 +19,18 @@ class CategoryController extends Controller
         // list all categories
         $categories = Category::all();
         return view("category.index", ['categories' => $categories]);
+    }
+    public function relatedWorkshop(int $categoryId): View
+    {
+        Gate::authorize('viewAny', Workshop::class);
+
+        $workshops = Workshop::with([
+            'reservations' => function ($query) {
+                $query->orderByDesc('available_spaces');
+            }
+        ])->where('category_id', $categoryId)->get();
+
+        return view('workshop.relatedWorkshop', compact('workshops'));
     }
     public function show(Category $category): View
     {
