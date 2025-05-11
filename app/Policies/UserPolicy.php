@@ -16,6 +16,12 @@ class UserPolicy
             ? Response::allow()
             : Response::denyWithStatus(403, "YOU DON'T HAVE PERMISSION TO DO THIS ACTION");
     }
+    public function coaches(User $user): Response
+    {
+        return $user->isCoachee()
+            ? Response::allow()
+            : Response::denyWithStatus(403, "YOU DON'T HAVE PERMISSION TO DO THIS ACTION");
+    }
 
     /**
      * Determine whether the user can view the model.
@@ -42,7 +48,7 @@ class UserPolicy
      */
     public function update(User $user, User $model): Response
     {
-        return $user->isAdmin()||$user->id === $model->id
+        return $user->isAdmin() || $user->id === $model->id
             ? Response::allow()
             : Response::denyWithStatus(403, "YOU DON'T HAVE PERMISSION TO DO THIS ACTION");
     }

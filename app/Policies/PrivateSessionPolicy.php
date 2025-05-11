@@ -13,8 +13,14 @@ class PrivateSessionPolicy
      */
     public function viewAny(User $user): Response
     {
-        $coachId = PrivateSession::getAttribute('coach_id');
-        $coacheeId = PrivateSession::getAttribute('coachee_id');
+        $privateSession = PrivateSession::latest()->first();
+
+        if (!$privateSession) {
+            return Response::denyWithStatus(404, "Session not found");
+        }
+
+        $coachId = $privateSession->coach_id;
+        $coacheeId = $privateSession->coachee_id;
         return $user->id === $coachId || $user->id === $coacheeId
             ? Response::allow()
             : Response::denyWithStatus(403, "YOU DON'T HAVE PERMISSION TO DO THIS ACTION");

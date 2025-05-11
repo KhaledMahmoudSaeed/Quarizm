@@ -29,7 +29,7 @@ class WorkshopPolicy
      */
     public function create(User $user): Response
     {
-        return $user->isCoach()
+        return $user->isCoach() || $user->isAdmin()
             ? Response::allow()
             : Response::denyWithStatus(403, "YOU DON'T HAVE PERMISSION TO DO THIS ACTION");
     }
@@ -39,7 +39,7 @@ class WorkshopPolicy
      */
     public function update(User $user, Workshop $workshop): Response
     {
-        return $user->isCoach()
+        return $user->isCoach() ||$user->isAdmin()
             ? Response::allow()
             : Response::denyWithStatus(403, "YOU DON'T HAVE PERMISSION TO DO THIS ACTION");
     }

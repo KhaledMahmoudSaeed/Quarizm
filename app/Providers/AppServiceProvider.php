@@ -54,7 +54,16 @@ class AppServiceProvider extends ServiceProvider
                 return $modelClass::findOrFail($value);
             });
         }
-        Model::preventLazyLoading(!$this->app->environment('production'));
+        Gate::define('Admin', function ($user) {
+            return $user->role === 'Admin';
+        });
+        Gate::define('Coach', function ($user) {
+            return $user->role === 'Coach';
+        });
+        Gate::define('Coachee', function ($user) {
+            return $user->role === 'Coachee';
+        });
+        // Model::preventLazyLoading(!$this->app->environment('production'));
         Gate::policy(User::class, UserPolicy::class);
         Gate::policy(Category::class, CategoryPolicy::class);
         Gate::policy(CoachDate::class, CoachDatePolicy::class);
