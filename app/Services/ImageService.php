@@ -16,14 +16,14 @@ class ImageService
         // Initialize Cloudinary with config from .env
         $this->cloudinary = new Cloudinary([
             'cloud' => [
-                'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
-                'api_key' => env('CLOUDINARY_API_KEY'),
-                'api_secret' => env('CLOUDINARY_API_SECRET'),
+                'cloud_name' => config("app.cloudnairy.cloud_name"),
+                'api_key' => config("app.cloudnairy.api_key"),
+                'api_secret' => config("app.cloudnairy.api_secret"),
             ],
             'url' => ['secure' => true],
         ]);
     }
-    public function uploadImage(UploadedFile $file): array
+    public function uploadImage(UploadedFile $file): string
     {
         // Read image into memory
         $imageData = file_get_contents($file->getRealPath());
@@ -57,10 +57,8 @@ class ImageService
             throw new \Exception("Cloudinary upload error: " . $result['error']['message']);
         }
 
-        return [
-            'url' => $result['secure_url'],
-            'public_id' => $result['public_id']
-        ];
+        return $result['secure_url'];
+
     }
     public function deleteImage(string $publicId): void
     {
@@ -71,5 +69,16 @@ class ImageService
         if ($result['result'] !== 'ok') {
             throw new \Exception("Failed to delete image: " . json_encode($result));
         }
+    }
+    public function extractPublicId(string $url): string
+    {
+        // Remove query string if present
+        $url = strtok($url, '?');
+        // Get the last segment after the last '/'
+        $parts = explode('/', $url);
+        $filename = end($parts);
+        // Remove the extension
+        $publicId = pathinfo($filename, PATHINFO_FILENAME);
+        return $publicId;
     }
 }
