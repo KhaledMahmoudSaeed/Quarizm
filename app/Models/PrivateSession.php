@@ -13,8 +13,12 @@ class PrivateSession extends Model
         'coachee_id',
         'created_at'
     ];
-    public function user(): BelongsTo
+    public function coach(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, "coach_id");
+    }
+    public function coachee(): BelongsTo
+    {
+        return $this->belongsTo(User::class, "coachee_id");
     }
 }
