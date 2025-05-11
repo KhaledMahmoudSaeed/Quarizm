@@ -25,7 +25,6 @@ class UpdatePrivateSessionRequest extends FormRequest
     {
         return [
             "date" => ['nullable', 'date_format:Y-m-d H-i'],
-            'size' => ['nullable', 'min:1', 'max:200', 'numeric'],
             'price' => ['nullable', 'numeric'],
         ];
     }

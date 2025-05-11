@@ -25,7 +25,6 @@ class StorePrivateSessionRequest extends FormRequest
     {
         return [
             "date" => ['required', 'date_format:Y-m-d H-i'],
-            'size' => ['required', 'min:1', 'max:200', 'numeric'],
             'price' => ['required', 'numeric'],
             "coach_id" => ['required', 'Integer', 'exists:user,id'],
             "coachee_id" => ['required', 'Integer', 'exists:user,id']
