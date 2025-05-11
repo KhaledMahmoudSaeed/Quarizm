@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->enum('gender', ['male', 'female']);
             $table->string('phone', 20);
             $table->string('country', 50);
-            $table->string("img")->default("coachUser_srhf5b");
+            $table->string("img")->default("https://res.cloudinary.com/dweffiohi/image/upload/v1746553054/coachUser_srhf5b.png");
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

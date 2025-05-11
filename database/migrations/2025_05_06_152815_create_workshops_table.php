@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->dateTime("date");
             $table->integer("price");
             $table->boolean("finish")->default(false);
-            $table->string("img")->default("coachCategory_obegmk");
+            $table->string("img")->default("https://res.cloudinary.com/dweffiohi/image/upload/v1746548683/coachCategory_obegmk.png");
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();

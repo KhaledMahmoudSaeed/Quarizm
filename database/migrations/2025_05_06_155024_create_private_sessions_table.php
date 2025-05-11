@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->id();
             $table->timestamp('date');
             $table->integer("size");
+            $table->integer("price");
             $table->foreignIdFor(User::class, "coach_id")->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(User::class, "coachee_id")->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
