@@ -5,62 +5,61 @@ namespace App\Http\Controllers;
 use App\Models\PrivateSession;
 use App\Http\Requests\StorePrivateSessionRequest;
 use App\Http\Requests\UpdatePrivateSessionRequest;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class PrivateSessionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): View
     {
-        //
+        Gate::authorize("viewAny", PrivateSession::class);
+        $id = Auth::id();
+        $isCoach = PrivateSession::where("coach_id", $id)->exists();
+        if ($isCoach) {
+            $PrivateSessionsData = PrivateSession::with("coach")->where('coach_id', $id)->get(['date', 'coach_id']);
+        } else {
+            $PrivateSessionsData = PrivateSession::with("coachee")->where('coachee_id', $id)->get(['date', 'coachee_id']);
+        }
+        return view("privatesession.index", ['privateSessionsData' => $PrivateSessionsData]);
+    }
+    public function show(PrivateSession $privatesession): View
+    {
+        Gate::authorize("view", $privatesession);
+        return view("privatesession.show", ['privatesession' => $privatesession]);
+    }
+    public function create(): View
+    {
+        Gate::authorize("create", PrivateSession::class);
+        return view("privatesession.create");
+    }
+    public function store(StorePrivateSessionRequest $storePrivateSessionRequest): RedirectResponse
+    {
+        Gate::authorize("create", PrivateSession::class);
+        $validatedData = $storePrivateSessionRequest->validated();
+        PrivateSession::create($validatedData);
+        return to_route("privatesession.index")->with("success", "PRIVATESESSION HAS BEEN SUCCESSFULLY CREATED");
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function edit(PrivateSession $privatesession): View
     {
-        //
+        Gate::authorize("update", $privatesession);
+        return view("privatesession.edit", ['privatesession' => $privatesession]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StorePrivateSessionRequest $request)
+    public function update(UpdatePrivateSessionRequest $request, PrivateSession $privatesession): RedirectResponse
     {
-        //
+        Gate::authorize("update", $privatesession);
+        $validatedData = $request->validated();
+        $privatesession->update($validatedData);
+        return to_route("privatesession.index")->with("success", "PRIVATESESSION HAS BEEN SUCCESSFULLY UPDATED");
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(PrivateSession $privateSession)
+    public function destroy(PrivateSession $privatesession): RedirectResponse
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(PrivateSession $privateSession)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdatePrivateSessionRequest $request, PrivateSession $privateSession)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(PrivateSession $privateSession)
-    {
-        //
+        Gate::authorize("delete", $privatesession);
+        $privatesession->delete();
+        return to_route("privatesession.index")->with("success", "PRIVATESESSION HAS BEEN SUCCESSFULLY DELETED");
     }
 }

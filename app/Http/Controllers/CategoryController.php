@@ -5,62 +5,55 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): View
     {
-        //
+        Gate::authorize('viewAny', Category::class);
+        // list all categories
+        $categories = Category::all();
+        return view("category.index", ['categories' => $categories]);
+    }
+    public function show(Category $category): View
+    {
+        Gate::authorize('view', $category);
+        return view("category.show", ['category' => $category]);
+    }
+    public function create(): View
+    {
+        Gate::authorize('create', Category::class);
+        return view("category.create");
+    }
+    public function store(StoreCategoryRequest $storeCategoryRequest): RedirectResponse
+    {
+        Gate::authorize('create', Category::class);
+        $validatedData = $storeCategoryRequest->validated();
+        Category::create($validatedData);
+        return to_route("category.index")->with("success", "CATEGORY HAS BEEN SUCCESSFULLY CREATED");
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function edit(Category $category): View
     {
-        //
+        Gate::authorize('update', $category);
+        return view("category.edit", ['category' => $category]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreCategoryRequest $request)
+    public function update(UpdateCategoryRequest $request, Category $category): RedirectResponse
     {
-        //
+        Gate::authorize('update', $category);
+        $validatedData = $request->validated();
+        $category->update($validatedData);
+        return to_route("category.index")->with("success", "CATEGORY HAS BEEN SUCCESSFULLY UPDATED");
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Category $category)
+    public function destroy(Category $category): RedirectResponse
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Category $category)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCategoryRequest $request, Category $category)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Category $category)
-    {
-        //
+        Gate::authorize('delete', $category);
+        $category->delete();
+        return to_route("category.index")->with("success", "CATEGORY HAS BEEN SUCCESSFULLY DELETED");
     }
 }
