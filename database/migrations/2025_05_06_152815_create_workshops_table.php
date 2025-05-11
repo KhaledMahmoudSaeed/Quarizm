@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->integer("duration");
             $table->integer("size");
             $table->dateTime("date");
+            $table->integer("price");
             $table->boolean("finish")->default(false);
             $table->string("img")->default("coachCategory_obegmk");
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();

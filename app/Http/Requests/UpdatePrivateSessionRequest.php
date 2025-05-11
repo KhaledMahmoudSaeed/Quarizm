@@ -24,7 +24,8 @@ class UpdatePrivateSessionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "date" => ['required', 'date_format:Y-m-d H-i'],
+            "date" => ['nullable', 'date_format:Y-m-d H-i'],
+            'size' => ['nullable', 'min:1', 'max:200', 'numeric'],
         ];
     }
 }
