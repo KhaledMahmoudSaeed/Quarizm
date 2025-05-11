@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->integer('available_spaces');
+            $table->integer('available_spaces')->nullable();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(Workshop::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();

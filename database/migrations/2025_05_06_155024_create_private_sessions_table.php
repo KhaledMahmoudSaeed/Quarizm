@@ -14,9 +14,8 @@ return new class extends Migration {
         Schema::create('private_sessions', function (Blueprint $table) {
             $table->id();
             $table->timestamp('date');
-            $table->integer("size");
             $table->integer("price");
-            $table->foreignIdFor(User::class, "coach_id")->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(User::class, "coach_id")->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(User::class, "coachee_id")->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
