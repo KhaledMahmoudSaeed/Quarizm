@@ -122,5 +122,12 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+    "workshop_default_image_url" => env("WORKSHOP_DEFAULT_IMAGE_URL", "https://res.cloudinary.com/dweffiohi/image/upload/v1746548683/coachCategory_obegmk.png"),
+    "user_default_image_url" => env("USER_DEFAULT_IMAGE_URL", "https://res.cloudinary.com/dweffiohi/image/upload/v1746553054/coachUser_srhf5b.png"),
 
+    'cloudnairy' => [
+        'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+        'api_key' => env('CLOUDINARY_API_KEY'),
+        'api_secret' => env('CLOUDINARY_API_SECRET'),
+    ]
 ];
