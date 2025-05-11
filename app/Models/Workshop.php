@@ -13,6 +13,7 @@ class Workshop extends Model
         'duration',
         'size',
         'date',
+        'price',
         'finish',
         'img',
         'user_id',

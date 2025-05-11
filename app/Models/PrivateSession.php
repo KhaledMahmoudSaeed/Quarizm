@@ -9,6 +9,7 @@ class PrivateSession extends Model
 {
     protected $fillable = [
         'date',
+        'price',
         'coach_id',
         'coachee_id',
         'created_at'

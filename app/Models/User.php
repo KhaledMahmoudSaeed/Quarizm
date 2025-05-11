@@ -63,4 +63,16 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Reservation::class);
     }
+    public function isAdmin(): bool
+    {
+        return $this->role === "Admin";
+    }
+    public function isCoach(): bool
+    {
+        return $this->role === "Coach";
+    }
+    public function isCoachee(): bool
+    {
+        return $this->role === "Coachee";
+    }
 }
