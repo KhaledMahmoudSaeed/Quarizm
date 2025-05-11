@@ -2,12 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 
-class StoreCategoryRequest extends FormRequest
+class StoreReservationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,14 +23,8 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => [
-                "required",
-                "string",
-                "alpha:ascii",
-                "max:100",
-                Rule::unique(Category::class)
-            ],
-            "description" => ["required", "string", "max:255"]
+            "user_id" => ['required', 'integer', 'exists:user,id'],
+            "workshop_id" => ['required', 'integer', 'exists:workshop,id']
         ];
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+
 
 class StoreCoachDateRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class StoreCoachDateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::check();
     }
 
     /**
@@ -22,7 +24,10 @@ class StoreCoachDateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'experience_years' => ['integer', 'max:50', 'required'],
+            'about' => ['string', 'max:255', 'required'],
+            'certificate_img' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:4096'],
+            'user_id' => ['integer', 'exists:user,id', 'required']
         ];
     }
 }

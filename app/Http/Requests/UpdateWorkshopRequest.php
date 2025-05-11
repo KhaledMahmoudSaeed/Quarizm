@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+
 
 class UpdateWorkshopRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class UpdateWorkshopRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::check();
     }
 
     /**
@@ -22,7 +24,16 @@ class UpdateWorkshopRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['nullable', 'max:60', 'string'],
+            "description" => ["nullable", "string", "max:255"],
+            'duration' => ['nullable', 'min:1', 'max:10', 'integer'],
+            'size' => ['nullable', 'min:1', 'max:200', 'numeric'],
+            'price' => ['nullable', 'numeric'],
+            "date" => ['nullable', 'date_format:Y-m-d\TH:i'],
+            "finish" => ['nullable', 'boolean'],
+            'user_id' => ['integer', 'exists:user,id', 'nullable'],
+            'category_id' => ['integer', 'exists:category,id', 'nullable'],
+            'img' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:4096'],
         ];
     }
 }

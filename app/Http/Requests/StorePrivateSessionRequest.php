@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+
 
 class StorePrivateSessionRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class StorePrivateSessionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::check();
     }
 
     /**
@@ -22,7 +24,9 @@ class StorePrivateSessionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "date" => ['required', 'date_format:Y-m-d H-i'],
+            "coach_id" => ['required', 'Integer', 'exists:user,id'],
+            "coachee_id" => ['required', 'Integer', 'exists:user,id']
         ];
     }
 }

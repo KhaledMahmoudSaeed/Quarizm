@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 class UpdateCategoryRequest extends FormRequest
 {
     /**
@@ -11,7 +13,7 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::check();
     }
 
     /**
@@ -22,7 +24,19 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "name" => [
+                "nullable",
+                "string",
+                "alpha:ascii",
+                "max:100",
+                Rule::unique(Category::class)->ignore($this->category()->id)
+            ],
+            "description" => [
+                "nullable",
+                "string",
+                "alpha:ascii",
+                "max:255"
+            ]
         ];
     }
 }
